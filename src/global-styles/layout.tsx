@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 import { getGlobalTheme } from './themes'
 import { IconType } from 'react-icons'
+import * as GameIcons from 'react-icons/gi'
 
 export const TABLET_SIZE = '900px'
 export const DESKTOP_SIZE = '1200px'
+
+export const Icons: { [key: string]: IconType } = GameIcons
 
 export const BaseContainer = styled.div`
 	padding: 0.6rem;
@@ -55,7 +58,7 @@ const DisabledCardContainer = styled(CardContainer)`
 `
 
 export const Card = ({ onClick, icon: Icon, label, isDisabled }: {
-	onClick?: Function,
+	onClick?: React.MouseEventHandler<HTMLDivElement>,
 	icon: IconType,
 	label: string,
 	isDisabled?: Boolean,
@@ -71,3 +74,20 @@ export const Card = ({ onClick, icon: Icon, label, isDisabled }: {
 			<CardLabel>{label}</CardLabel>
 		</ActiveCardContainer>
 	)
+
+export const LoadingContainer = styled.div`
+	@keyframes pulse {
+		from { opacity: 0.5 }
+		to { opacity: 1 }
+	}
+
+	animation-duration: 0.5s;
+	animation-name: pulse;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+
+	text-align: center;
+	padding: 20vh 0;
+	font-size: 2rem;
+	width: 100%;
+`

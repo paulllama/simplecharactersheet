@@ -1,53 +1,50 @@
 import styled from 'styled-components'
-import { IconType } from 'react-icons'
-import {
-	GiRaiseZombie as MotwIcon,
-	GiSpaceship as LafIcon,
-	GiAnvilImpact as UnderConstructionIcon,
-} from 'react-icons/gi'
+import { useState, useEffect } from 'react'
 
-import { Card, TABLET_SIZE } from '../../global-styles'
+import { GameSummary, getGames } from '../../data-store'
+import { Card, TABLET_SIZE, Icons } from '../../global-styles'
 
 const Home = () => {
+	const [games, setGames] = useState<Array<GameSummary>>([])
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		setIsLoading(true)
+		getGames().then(games => {
+			setGames(games)
+			setIsLoading(false)
+		})
+	}, [])
+
 	return (
 		<StyledAppHome>
-				<p>Simple Character Sheets is an app for creating character sheets for indie games. Select a game below to get started:</p>
-
-			<GameList>
-				<CreateCharacter gameId="motw" gameName="Monster of the Week" icon={MotwIcon} />
-				<CreateCharacter gameId="laf" gameName="Lazers & Feelings" icon={LafIcon} />
-				<Card
-					isDisabled={true}
-					key="UnderConstruction"
-					label="More coming soon"
-					icon={UnderConstructionIcon}
-				/>
-			</GameList>
+			<p>Simple Character Sheets is an app for creating character sheets for indie games. Select a game below to get started:</p>
+			{!isLoading && (
+				<GameList>
+					{games.map(game => {
+						const Icon = Icons[game.icon || 'GiDiceTwentyFacesTwenty'] 
+						return (
+							<a href={`/games/${game._id}`}>
+								<Card 
+									key={game._id}
+									label={game.name}
+									icon={Icon}
+								/>
+							</a>	
+						)
+					})}
+					<Card
+						isDisabled={true}
+						key="UnderConstruction"
+						label="More coming soon"
+						icon={Icons.GiAnvilImpact}
+					/>
+				</GameList>
+			)}
 			<p>Don't have a printer around? Everyone only has their phones? Need to add custom moves or add notes? Use Simple Character Sheet to streamline and simplify your table-top gaming.</p>
-
 		</StyledAppHome>
 	)
 }
-
-const CreateCharacter = ({ 
-	gameId, 
-	gameName, 
-	icon, 
-	inProgress 
-}: {
-	gameId: string,
-	gameName: string,
-	icon: IconType,
-	inProgress?: boolean
-}) => (
-	<a href={`/games/${gameId}`}>
-		<Card
-			key={gameId}
-			label={gameName}
-			icon={inProgress ? UnderConstructionIcon : icon}
-		/>
-	</a>
-)
 
 const StyledAppHome = styled.div`
 	display: flex;

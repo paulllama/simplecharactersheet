@@ -1,41 +1,56 @@
 import styled from 'styled-components'
 import Color from 'color'
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, JSX } from 'react'
 
 export const LIGHT_THEME = 'Morning Sun'
 export const DIM_THEME = 'Witch Moon'
 export const DARK_THEME = 'Bat Night'
+
+export type Theme = {
+	linkColor: Color,
+	listBullet: string,
+	sublistBullet: string,
+	name: string,
+	backgroundColor: Color,
+	containerColor: Color,
+	fontColor: Color,
+}
 
 const BASE_STYLES = {
 	linkColor: new Color('#ef3e27'),
 	listBullet: '►',
 	sublistBullet: '▻',
 }
-const stylesByTheme = {
-	[LIGHT_THEME]: {
-		...BASE_STYLES,
-		name: LIGHT_THEME,
-		backgroundColor: new Color('#ede7df'),
-		containerColor: new Color('#f6f3ef'),
-		fontColor: new Color('#2e1f22'),
-	},
-	[DARK_THEME]: {
-		...BASE_STYLES,
-		name: DARK_THEME,
-		backgroundColor: new Color('#25191b'),
-		containerColor: new Color('#332225'),
-		fontColor: new Color('#f6f3ef'),
-	}
+const LIGHT_THEME_STYLES: Theme = {
+	...BASE_STYLES,
+	name: LIGHT_THEME,
+	backgroundColor: new Color('#ede7df'),
+	containerColor: new Color('#f6f3ef'),
+	fontColor: new Color('#2e1f22'),
+}
+const DARK_THEME_STYLES: Theme = {
+	...BASE_STYLES,
+	name: DARK_THEME,
+	backgroundColor: new Color('#25191b'),
+	containerColor: new Color('#332225'),
+	fontColor: new Color('#f6f3ef'),
+}
+
+const STYLES_BY_THEME: {
+	[name: string]: Theme
+} = {
+	[LIGHT_THEME]: LIGHT_THEME_STYLES,
+	[DARK_THEME]: DARK_THEME_STYLES,
 }
 
 const THEME_LS_KEY = 'scs-theme'
-let globalTheme
+let globalTheme: Theme
 
-export const setGlobalTheme = theme => {
+export const setGlobalTheme = (theme: Theme) => {
 	if (!theme || (theme === globalTheme)) {
 		return
 	}
-	localStorage.setItem(THEME_LS_KEY, theme)
+	localStorage.setItem(THEME_LS_KEY, theme.name)
 	window.location.reload()
 }
 
@@ -43,18 +58,19 @@ export const getGlobalTheme = () => {
 	if (!globalTheme) {
 		try {
 			const shouldDefaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-			const defaultTheme = shouldDefaultDark ? DARK_THEME : LIGHT_THEME
-			globalTheme = localStorage.getItem(THEME_LS_KEY) || defaultTheme
+			const defaultTheme: string = shouldDefaultDark ? DARK_THEME : LIGHT_THEME
+			const themeKeyFromStorage = localStorage.getItem(THEME_LS_KEY)
+			globalTheme = STYLES_BY_THEME[themeKeyFromStorage || defaultTheme]
 		} catch (e) {
 			console.error(e)
 		}
 	}
-	return stylesByTheme[globalTheme] || stylesByTheme[LIGHT_THEME]
+	return globalTheme || STYLES_BY_THEME[LIGHT_THEME]
 }
 
 const ThemedStyles = styled.div`
-	background: ${theme => theme.backgroundColor.string()};
-	color: ${theme => theme.fontColor.string()};
+	background: ${({ theme }) => theme.backgroundColor.string()};
+	color: ${({ theme }) => theme.fontColor.string()};
 	min-height: 100vh;
 	font-size: 1rem;
 
@@ -112,7 +128,7 @@ const ThemedStyles = styled.div`
 	}
 
 	a {
-		color: ${theme => theme.linkColor.string()};
+		color: ${({ theme }) => theme.linkColor.string()};
 		transition-property: color;
 		transition-duration: 0.3s;
 		font-weight: bold;
@@ -128,13 +144,13 @@ const ThemedStyles = styled.div`
 	}
 `
 
-export const GlobalStyles = ({ children }) => {
-	const [theme, setTheme] = useState(stylesByTheme[LIGHT_THEME])
+export const GlobalStyles = ({ children }: { children: JSX.Element[] | JSX.Element}) => {
+	const [theme, setTheme] = useState(STYLES_BY_THEME[LIGHT_THEME])
 	useEffect(() => {
 		setTheme(getGlobalTheme())
 	}, [])
 	return (
-		<ThemedStyles {...theme}>
+		<ThemedStyles theme={theme}>
 			{children}
 		</ThemedStyles>
 	)

@@ -91,7 +91,6 @@ const StyledCheckboxInput = styled.div`
 	${props => props.disabled ? inputDisabledStyles : ''}
 
 	svg {
-		opacity: ${props => props.checked ? '1' : '0'};
 		position: absolute;
 		font-size: 1.5em;
 		top: -0.325em;
@@ -102,16 +101,28 @@ const StyledCheckboxInput = styled.div`
 		appearance: none;
 	}
 `
+const StyledCheckedCheckboxInput = styled(StyledCheckboxInput)`
+	svg {
+		opacity: 1;
+	}
+`
+const StyledUncheckedCheckboxInput = styled(StyledCheckboxInput)`
+	svg {
+		opacity: 0;
+	}
+`
 
-export const CheckboxInput = ({ onChange, value, ...props }) => {
-	const toggleValue = () => onChange(props.checked ? null : value)
+export const CheckboxInput = ({ onChange, checked, key }: {
+	onChange: (value: boolean) => void,
+	key: string,
+	checked: boolean,
+}) => {
+	const toggleValue = () => onChange(!checked)
+	const CheckboxContainer = checked ? StyledCheckedCheckboxInput : StyledUncheckedCheckboxInput
 	return (
-		<StyledCheckboxInput
-			checked={props.checked}
-			onClick={toggleValue}
-		>
-			<input type="checkbox" {...props} onChange={toggleValue} />
+		<CheckboxContainer onClick={toggleValue} key={key}>
+			<input type="checkbox" id={key} name={key} onChange={toggleValue} />
 			<CheckedIcon />
-		</StyledCheckboxInput>
+		</CheckboxContainer>
 	)
 }
