@@ -1,5 +1,5 @@
 import { ClerkProvider, useAuth } from '@clerk/clerk-react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -8,7 +8,9 @@ const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 let getClerkTokenPromise: Promise<string | null> = new Promise(() => null)
 export const getClerkToken = (): Promise<string | null> => getClerkTokenPromise
 
-export const ClerkTokenProvider = ({ children }) => {
+export const ClerkTokenProvider = ({ children }: {
+    children: React.ReactNode
+}) => {
     const { getToken } = useAuth()
 
     useEffect(() => {
@@ -22,7 +24,9 @@ export const ClerkTokenProvider = ({ children }) => {
     )
 }
 
-export const CorsClerkProvider = ({ children }) => (
+export const CorsClerkProvider = ({ children }: {
+    children: React.ReactNode
+}) => (
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
         <ClerkTokenProvider>
             {children}

@@ -1,8 +1,8 @@
-import { useLocation } from 'wouter'
+// import { useLocation } from 'wouter'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 export const Header = () => {
-	const [url, navigate] = useLocation();
+	// const [url, navigate] = useLocation();
 
 	return (
 		<header>

@@ -1,4 +1,4 @@
-import { getClerkToken } from '../components/ClerkToken'
+import { getClerkToken } from '@scc/components/ClerkToken'
 import { 
     Character,
     GameData,

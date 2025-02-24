@@ -1,0 +1,25 @@
+@use 'media-sizes';
+
+.sheet-list {
+	display: flex;
+	flex-direction: row;
+	margin-top: 2em;
+	margin-bottom: 4em;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1em .5em;
+
+	> * {
+		min-width: 10em;
+		flex-basis: calc(33% - .5em);
+	}
+
+	@media (min-width: media-sizes.$tablet-size) {
+		gap: 2em 1em;
+
+		> * {
+			flex-basis: calc(25% - 1em);
+		}
+	}
+}

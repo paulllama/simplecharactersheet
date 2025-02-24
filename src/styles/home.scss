@@ -1,0 +1,23 @@
+@use 'media-sizes';
+
+.home {
+    display: flex;
+	flex-direction: column;
+}
+
+.game-list {
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: stretch;
+	gap: 1em;
+	margin-bottom: 2em;
+
+	> .card {
+		flex-basis: calc(50% - 1em);
+
+		@media (min-width: media-sizes.$tablet-size) {
+			flex-basis: calc(33% - 1em);
+		}
+	}
+}

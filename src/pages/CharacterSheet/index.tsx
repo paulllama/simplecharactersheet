@@ -1,61 +1,22 @@
-import { useParams, useLocation } from 'wouter'
+import { useParams } from 'wouter'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import * as R from 'ramda'
 
-import { Character, getCharacter, saveCharacter } from '../../data-store'
-import {
-	GiTinker as EditIcon,
-	GiCheckMark as SaveIcon,
-} from 'react-icons/gi' 
-import { getGlobalTheme, IconButton, LoadingContainer, TABLET_SIZE, TextInput } from '../../global-styles'
-
-const CharacterContainer = styled.div`
-`
-
-const CharacterHeader = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: stretch;
-	justify-content: space-between;
-	position: sticky;
-	padding-bottom: 0.75em;
-	border-bottom: 0.15rem solid;
-	background: ${getGlobalTheme().containerColor};
-	top: 0;
-	z-index: 1;
-	align-items: end;
-	font-size: 0.75rem;
-
-	@media (min-width: ${TABLET_SIZE}) {
-		font-size: 1rem;
-		height: 3rem;
-	}
-`
-const CharacterName = styled.h1`
-	margin-top: 0;
-	margin-bottom: 0;
-	display: flex;
-	flex-direction: column;
-	flex-basis: 100%;
-`
-const SheetControls = styled.div`
-	font-size: 1.25rem;
-`
+import { Character, getCharacter, saveCharacter } from '@scc/data-store'
+import { TextInput } from '@scc/components/input'
 
 const CharacterSheet = () => {
     const [character, setCharacter] = useState<Character | void>()
     const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
-    const [route, navigate] = useLocation()
+    // const [route, navigate] = useLocation()
 
-    const gameId = useParams()['gameId']
     const characterId = useParams()['characterId']
 
     useEffect(() => {
         if (characterId) {
             setIsLoading(true)
-            getCharacter(characterId).then(characterData => {
+            getCharacter(characterId).then((characterData: Character) => {
                 setCharacter(characterData)
                 setIsEditing(!characterData.name)
                 setIsLoading(false)
@@ -69,44 +30,47 @@ const CharacterSheet = () => {
     }
     
     if (isLoading) {
-        return <LoadingContainer>Loading Character...</LoadingContainer>
+        return <div className='loading'>Loading Character...</div>
     }
 
     if (!character || !character._id) {
-        return <CharacterContainer>Error loading character</CharacterContainer>
+        return <div className="character-sheet">Error loading character</div>
     }
 
     return (
-        <CharacterContainer>
-            <CharacterHeader>
-				<CharacterName>
+        <div className="character-sheet">
+            <h1 className='header'>
+				<span>
 					{isEditing ? (
 						<TextInput
-							value={character.name}
-							onChange={event => updateCharacter(['name'], event.target.value)}
+                            key='name'
+							value={character.name || ''}
+							onChange={newValue => updateCharacter(['name'], newValue)}
 						/>
 					) : character.name}
-				</CharacterName>
-				<SheetControls>
+				</span>
+				<span className='controls'>
 					{isEditing ? (
-						<IconButton
-							icon={SaveIcon}
-							label="Save"
+						<button
+							name="save"
 							onClick={() => {
 								saveCharacter(character)
 								setIsEditing(false)
 							}}
-						/>
+						>
+                            <span className='icon save' />
+                        </button>
 					) : (
-						<IconButton
-							icon={EditIcon}
-							label="Edit Character"
+						<button
+							name='edit'
 							onClick={() => setIsEditing(true)}
-						/>
+						>
+                            <span className='icon edit' />
+                        </button>
 					)}
-				</SheetControls>
-			</CharacterHeader>
-        </CharacterContainer>
+				</span>
+			</h1>
+        </div>
     )
 }
 

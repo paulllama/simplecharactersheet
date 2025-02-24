@@ -1,20 +1,20 @@
 import { Route, Switch } from "wouter";
-import { CharacterList } from '../pages/CharacterList/index.jsx';
-import { NewCharacter } from '../pages/NewCharacter/index.jsx';
-import { CharacterSheet } from '../pages/CharacterSheet/index.jsx';
-import { Home } from '../pages/Home/index.jsx';
-import { NotFound } from '../pages/_404.jsx';
+import { CharacterList } from '@scc/pages/CharacterList/index';
+import { NewCharacter } from '@scc/pages/NewCharacter/index';
+import { CharacterSheet } from '@scc/pages/CharacterSheet/index';
+import { Home } from '@scc/pages/Home/index';
+import { NotFound } from '@scc/pages/_404';
 
 export const Routes = () => {
     return (
-        <Switch>
-            <Route path="/characters">
-                <CharacterList />
-            </Route>
-            <Route path="/games/:gameId/characters/:characterId" component={CharacterSheet} />
-            <Route path="/games/:gameId/" component={NewCharacter} />
-            <Route path="/" component={Home} />
-            <Route component={NotFound} />
-        </Switch>
+        <div className="app-container">
+            <Switch>
+                <Route path="/characters" component={CharacterList} />
+                <Route path="/games/:gameId/characters/:characterId" component={CharacterSheet} />
+                <Route path="/games/:gameId/" component={NewCharacter} />
+                <Route path="/" component={Home} />
+                <Route component={NotFound} />
+            </Switch>
+        </div>
     )
 }
