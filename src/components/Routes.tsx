@@ -1,4 +1,5 @@
 import { Route, Switch } from "wouter";
+import { Container } from "react-bootstrap"
 import { CharacterList } from '@scc/pages/CharacterList/index';
 import { NewCharacter } from '@scc/pages/NewCharacter/index';
 import { CharacterSheet } from '@scc/pages/CharacterSheet/index';
@@ -7,7 +8,7 @@ import { NotFound } from '@scc/pages/_404';
 
 export const Routes = () => {
     return (
-        <div className="app-container">
+        <Container>
             <Switch>
                 <Route path="/characters" component={CharacterList} />
                 <Route path="/games/:gameId/characters/:characterId" component={CharacterSheet} />
@@ -15,6 +16,6 @@ export const Routes = () => {
                 <Route path="/" component={Home} />
                 <Route component={NotFound} />
             </Switch>
-        </div>
+        </Container>
     )
 }

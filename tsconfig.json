@@ -5,9 +5,8 @@
 	  "useDefineForClassFields": true,
 	  "lib": ["ES2020", "DOM", "DOM.Iterable"],
 	  "module": "ESNext",
-	  "baseUrl": "./src/",
 	  "paths": {
-		"@scc/*": ["*"],
+		"@scc/*": ["./src/*"],
 	  },
 	  "types": ["vite/client"],
   
@@ -29,7 +28,6 @@
 	  "noFallthroughCasesInSwitch": true,
 	  "noUncheckedSideEffectImports": true
 	},
-	"exclude": ["./node_modules/*", "./node_modules/**/*"],
-	// "include": ["src/**/*"]
+	"include": ["src"]
 }
   

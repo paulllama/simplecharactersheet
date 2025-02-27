@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-
+import { Card } from 'react-bootstrap'
 import { GameSummary, getGames } from '@scc/data-store'
-import { Card } from '@scc/components/card'
 
 const Home = () => {
 	const [games, setGames] = useState<Array<GameSummary>>([])
@@ -19,21 +18,24 @@ const Home = () => {
 		<div className='home'>
 			<p>Simple Character Sheets is an app for creating character sheets for indie games. Select a game below to get started:</p>
 			{!isLoading && (
-				<div className='game-list'>
+				<div className='row g-4'>
 					{games.map(game => (
-						<Card 
-							key={game._id}
-							label={game.name}
-							href={`/games/${game._id}`}
-							icon={game.icon}
-						/>
+						<div className='col-6 col-md-4'>
+							<Card 
+								key={game._id}
+								as='a'
+								href={`/games/${game._id}`}
+								className='overflow-hidden'
+							>
+								<Card.Img variant="top" src={`game-assets/${game.code}/thumbnail.jpg`} />
+								<Card.ImgOverlay className='bg-body'>
+									<Card.Title className='fw-bold'>{game.name}</Card.Title>
+									<Card.Text>Create a character {'>'}</Card.Text>
+								</Card.ImgOverlay>
+							</Card>
+						</div>
 					))}
-					<Card
-						isDisabled={true}
-						key="UnderConstruction"
-						label="More coming soon"
-						icon=''
-					/>
+					<p>More coming soon!</p>
 				</div>
 			)}
 			<p>Don't have a printer around? Everyone only has their phones? Need to add custom moves or add notes? Use Simple Character Sheet to streamline and simplify your table-top gaming.</p>

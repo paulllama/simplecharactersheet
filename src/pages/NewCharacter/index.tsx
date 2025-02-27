@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useLocation } from 'wouter'
-
+import { Card } from 'react-bootstrap'
 import { getGameData, createCharacter, SheetSummary } from '@scc/data-store'
-import { Card } from '@scc/components/card'
 
 export const NewCharacter = () => {
 	const [gameName, setGameName] = useState("")
@@ -52,9 +51,9 @@ export const NewCharacter = () => {
 					<Card
 						key={sheet._id}
 						onClick={() => createCharacterAndGoToSheet(sheet._id)}
-						icon={sheet.icon}
-						label={sheet.name}
-					/>
+					>
+						<Card.Title>{sheet.name}</Card.Title>
+					</Card>
 				))}
 			</div>
 			<p>

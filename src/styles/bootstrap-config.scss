@@ -1,0 +1,32 @@
+// MAIN COLORS
+$primary: #b94e42;
+$secondary: #b2277a;
+$success: #27f1c6;
+$info: #8836fb;
+$warning: #ffe02e;
+$danger: #ff7c30;
+$light: #fff7cd;
+$dark: #332901;
+
+// LIGHT THEME BG COLORS
+$body-bg: hsl(37, 37%, 93%);    
+$body-secondary-bg: hsl(0, 0%, 100%);
+$body-tertiary-bg: hsl(35, 35%, 85%);
+$light-bg-subtle: $body-secondary-bg;
+$dark-bg-subtle: mix($light-bg-subtle, #fff);
+$light-border-subtle: $body-tertiary-bg;
+$dark-border-subtle: mix($light-border-subtle, #fff);
+
+// DARK THEME BG COLORS
+$body-bg-dark: hsl(37, 22%, 10%);    
+$body-secondary-bg-dark: hsl(37, 20%, 20%);
+$body-tertiary-bg-dark: hsl(37, 20%, 30%);
+$light-bg-subtle-dark: $body-secondary-bg-dark;
+$dark-bg-subtle-dark: mix($light-bg-subtle-dark, #000);
+$light-border-subtle-dark: $body-tertiary-bg-dark;
+$dark-border-subtle-dark: mix($light-border-subtle-dark, #000);
+
+$font-family-base: "Onest", sans-serif;
+$headings-font-family: "Phudu", sans-serif;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

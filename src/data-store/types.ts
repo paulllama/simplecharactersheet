@@ -40,7 +40,7 @@ export type BlocksSheetBlock = SheetBlock & {
 
 export type GameSummary = MongooseModel & {
     name: string,
-    icon: string,
+    code: string,
 }
 
 export type SheetSummary = MongooseModel & {
@@ -57,7 +57,6 @@ export type GameData = GameSummary & {
         },
         defaultValue: number,
         names: Array<string>,
-        // rollOptions: {} // TODO
     },
     sheets: Array<SheetSummary>,
     sheetTemplate: Array<SheetBlock>,
