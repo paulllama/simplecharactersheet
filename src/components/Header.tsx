@@ -12,7 +12,7 @@ export const Header = () => {
 	return (
 		<Navbar expand="lg" className="bg-body-tertiary">
 			<Container>
-			<Navbar.Brand href="/">
+			<Navbar.Brand href="/" className='h4'>
 				<img src='/logo192.png' alt='Simple Character Sheet' />
 				{' '}
 				<span className='d-none d-lg-inline'>Simple Character Sheet</span>

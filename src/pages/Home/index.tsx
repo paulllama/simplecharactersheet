@@ -20,9 +20,8 @@ const Home = () => {
 			{!isLoading && (
 				<div className='row g-4'>
 					{games.map(game => (
-						<div className='col-6 col-md-4'>
+						<div className='col-6 col-md-4' key={game._id}>
 							<Card 
-								key={game._id}
 								as='a'
 								href={`/games/${game._id}`}
 								className='overflow-hidden'
