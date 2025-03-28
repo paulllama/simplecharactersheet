@@ -1,0 +1,31 @@
+.game-icon {
+    display: flex;
+    justify-content: center;
+
+    svg {
+        width: inherit !important;
+        height: inherit !important;
+        background: transparent;
+    }
+}
+
+.btn {
+    .game-icon {
+        svg {
+            height: 2em !important;
+            width: 2em !important;
+
+            path {
+                fill: var(--bs-btn-color);
+            }
+        }
+    }
+
+    &:hover {
+        .game-icon svg path {
+            fill: var(--bs-btn-hover-color);
+        }
+    }
+
+    
+}

@@ -1,6 +1,6 @@
 // MAIN COLORS
 $primary: #b94e42;
-$secondary: #b2277a;
+$secondary: hsl(37, 20%, 40%);
 $success: #27f1c6;
 $info: #8836fb;
 $warning: #ffe02e;
@@ -28,5 +28,10 @@ $dark-border-subtle-dark: mix($light-border-subtle-dark, #000);
 
 $font-family-base: "Onest", sans-serif;
 $headings-font-family: "Phudu", sans-serif;
+
+$btn-border-radius: 2em;
+$btn-border-radius-lg: 2em;
+$btn-padding-x-lg: 2em;
+$nav-pills-border-radius: $btn-padding-x-lg;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";

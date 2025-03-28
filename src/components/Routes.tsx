@@ -28,7 +28,7 @@ const SignedInRoute = ({ path, children }: {
 
 export const Routes = () => {
     return (
-        <Container>
+        <Container className='my-3 my-md-4 my-lg-5'>
             <Switch>
                 <SignedInRoute path="/characters">
                     <CharacterList />

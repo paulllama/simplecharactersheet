@@ -18,6 +18,7 @@ const fetchJson = async (uri: string, options?: any | void): Promise<any> => {
             'Content-Type': 'application/json',
         }
     } : undefined
+
     const response = await fetch(`${API_URL}${uri}`, init)
     return response.json()
 }

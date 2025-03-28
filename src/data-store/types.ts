@@ -2,19 +2,17 @@ interface MongooseModel {
     _id: string,
 }
 
-export type Character = MongooseModel & {
-    name?: string,
-    gameId: string,
-    sheetId?: string,
-    userId: string,
-}
-
 export interface SheetBlock {
     name: string,
-    type: "list" | "boxes" | "blocks" | "parent",
+    blockType: "list" | "boxes" | "blocks" | "parent",
     hideName?: boolean,
     description?: string,
     editDescription?: string,
+    items?: Array<string>,
+    showItemAdditionalInfo?: boolean,
+    count?: number,
+    labels?: Array<string>,
+    children?: Array<SheetBlock>,
 }
 
 export type ListSheetBlock = SheetBlock & {
@@ -38,6 +36,14 @@ export type BlocksSheetBlock = SheetBlock & {
     type: "blocks",
 }
 
+export type Character = MongooseModel & {
+    name?: string,
+    gameId: string,
+    sheetId?: string,
+    userId: string,
+    blocks: Array<SheetBlock>,
+}
+
 export type GameSummary = MongooseModel & {
     name: string,
     code: string,
@@ -46,6 +52,7 @@ export type GameSummary = MongooseModel & {
 export type SheetSummary = MongooseModel & {
     name: string,
     icon: string,
+    description: string,
 }
 
 export type GameData = GameSummary & {

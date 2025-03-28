@@ -1,9 +1,12 @@
 import { useParams } from 'wouter'
 import { useEffect, useState } from 'react'
 import * as R from 'ramda'
+import parse from 'html-react-parser'
+import showdown from 'showdown'
+import { Alert, Button, Card, Col, Form, Row, Spinner } from 'react-bootstrap'
 
-import { Character, getCharacter, saveCharacter } from '@scc/data-store'
-import { TextInput } from '@scc/components/input'
+import { Character, getCharacter, saveCharacter, SheetBlock } from '@scc/data-store'
+import { Block } from './block'
 
 const CharacterSheet = () => {
     const [character, setCharacter] = useState<Character | void>()
@@ -28,49 +31,67 @@ const CharacterSheet = () => {
         const pathLens = R.lensPath(path)
         setCharacter(R.set(pathLens, value, character))
     }
-    
+
     if (isLoading) {
-        return <div className='loading'>Loading Character...</div>
+        return (
+            <Card className='py-5'>
+                <div className='text-center'>
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading Character...</span>
+                    </Spinner>
+                </div>
+            </Card>
+        )
     }
 
     if (!character || !character._id) {
-        return <div className="character-sheet">Error loading character</div>
+        return (
+            <Alert variant='danger'>Error loading character</Alert>
+        )
     }
 
     return (
-        <div className="character-sheet">
-            <h1 className='header'>
-				<span>
+        <Card>
+            <Row>
+				<Col xs='9'>
 					{isEditing ? (
-						<TextInput
-                            key='name'
+						<Form.Control
 							value={character.name || ''}
 							onChange={newValue => updateCharacter(['name'], newValue)}
 						/>
 					) : character.name}
-				</span>
-				<span className='controls'>
+				</Col>
+				<Col xs='3'>
 					{isEditing ? (
-						<button
-							name="save"
+						<Button
+							variant='primary'
 							onClick={() => {
 								saveCharacter(character)
 								setIsEditing(false)
 							}}
 						>
                             <span className='icon save' />
-                        </button>
+                        </Button>
 					) : (
-						<button
-							name='edit'
+						<Button
+							variant='primary'
 							onClick={() => setIsEditing(true)}
 						>
                             <span className='icon edit' />
-                        </button>
+                        </Button>
 					)}
-				</span>
-			</h1>
-        </div>
+				</Col>
+			</Row>
+            {character.blocks.map((block: SheetBlock, blockIndex: number) => (
+                <Block 
+                    block={block} 
+                    isEditing={true}
+                    update={(value, path = []) => 
+                        updateCharacter(value, ['blocks', blockIndex, ...path])
+                    }
+                />
+            ))}
+        </Card>
     )
 }
 

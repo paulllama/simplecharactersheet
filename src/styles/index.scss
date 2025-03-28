@@ -1,36 +1,11 @@
 @import 'bootstrap-config';
 
+@import 'game-icon';
+@import 'global';
+
 @import 'home';
 @import 'character-new';
 @import 'character-sheet';
 
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&family=Phudu:wght@300..900&display=swap');
 
-.navbar-brand img {
-    width: 2rem;
-}
-
-a.card {
-    & .card-img-overlay {
-        top: unset;
-        --bs-bg-opacity: 0.8;
-
-        & .card-text {
-            height: 0;
-            line-height: 1em;
-            overflow: hidden;
-            transition-property: height;
-            transition-duration: 200ms;
-        }
-    }
-
-    &:hover {
-        & .card-img-overlay {
-            --bs-bg-opacity: 0.95;
-
-            & .card-text {
-                height: 1em;
-            }
-        }
-    }
-}

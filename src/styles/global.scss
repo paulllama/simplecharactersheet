@@ -1,0 +1,30 @@
+.navbar-brand img {
+    width: 2rem;
+}
+
+.card {
+    cursor: pointer; 
+    
+    & .card-img-overlay {
+        top: unset;
+        --bs-bg-opacity: 0.8;
+
+        & .card-text {
+            height: 0;
+            line-height: 1em;
+            overflow: hidden;
+            transition-property: height;
+            transition-duration: 200ms;
+        }
+    }
+
+    &:hover {
+        & .card-img-overlay {
+            --bs-bg-opacity: 0.95;
+
+            & .card-text {
+                height: 1em;
+            }
+        }
+    }
+}
